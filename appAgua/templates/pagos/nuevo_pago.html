@@ -1,0 +1,102 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %} Registrar Pago {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="text-center bg-facebook text-white p-2">
+            <h4><i class="fa fa-plus"></i> NUEVO PAGO</h4>
+        </div>
+        <div class="bg-light p-3">
+            <form method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible" role="alert" id="liveAlert" >
+                    <strong>Faltan datos: </strong> 
+                    {% for error in form.errors %}
+                        {{ error }} -
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <p class="text-dark">Campos Obligatorios <span class="text-danger">*</span></p>
+                <div class="mb-3">
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Usuario <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <select class="form-control" id="usuario" name="usuario">
+                                <option selected>--- Seleccione un usuario ---</option>
+                                {% for usuario in usuarios  %}
+                                <option value="{{usuario.pk}}">{{usuario.nombres}} {{usuario.apellidos}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+        
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Tesorero <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <select class="form-control" id="exampleFormControlSelect1" name="tesorero">
+                                <option selected>--- Seleccione un tesorero ---</option>
+                                {% for tesorero in tesoreros  %}
+                                <option value="{{tesorero.pk}}">{{tesorero.nombres}} {{tesorero.apellidos}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Mes Desde <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="date" name="mesDesde" id="mesDesde" required="True" class="form-control" value="{{form.mesDesde.value}}">
+                        </div>
+                    </div>
+                    
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Mes Hasta <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="date" name="mesHasta" id="mesHasta" required="True" class="form-control" value="{{form.mesHasta.value}}">
+                        </div>
+                    </div>
+                    
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Costo Servicio <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="number" name="costoServicio" id="costoServicio" required="True" class="form-control" value="{{form.costoServicio.value}}" placeholder="Ingrese el costo del servicio">
+                        </div>
+                    </div>
+                    <br>
+                    <center>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info mr-2 w-25"><i class="fa fa-floppy-o"></i> Registrar</button>
+                            <a class="btn btn-danger w-25" href="/listarPagos/"><i class="fa fa-times-circle"></i> Cancelar</a>
+                        </div>
+                    </center>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts_local %}  
+ <script>  
+  $(function () {  
+   $("#id_mesDesde").datetimepicker({  
+       format: 'd/m/Y',  
+       timepicker:false  
+   });  
+   $("#id_mesHasta").datetimepicker({  
+       format: 'd/m/Y',  
+       timepicker:false  
+   });  
+  });  
+ </script> 
+ 
+ <script>  
+    $(document).ready(function () {  
+          jQuery.datetimepicker.setLocale('es');  
+    });  
+  </script> 
+ {% endblock scripts_local %}  

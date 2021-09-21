@@ -1,0 +1,91 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %} Registrar Servicio Agua {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="text-center bg-facebook text-white p-2">
+            <h4><i class="fa fa-plus"></i> NUEVO SERVICIO AGUA</h4>
+        </div>
+        <div class="bg-light p-3">
+            <form method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible" role="alert" id="liveAlert">
+                    <strong>Faltan datos: </strong> 
+                    {% for error in form.errors %}
+                        {{ error }} -
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <p class="text-dark">Campos Obligatorios <span class="text-danger">*</span></p>
+                <div class="mb-3">
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Usuario <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <select class="form-control" id="usuario" name="usuario">
+                                <option selected>--- Seleccione un usuario ---</option>
+                                {% for usuario in usuarios  %}
+                                <option value="{{usuario.pk}}">{{usuario.nombres}} {{usuario.apellidos}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Costo Activación <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="number" name="costoActivacion" id="costoActivacion" required="True" class="form-control" value="{{form.costoActivacion.value}}" placeholder="Ingrese el costo de activación">
+                        </div>
+                    </div>
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Motivo Suspensión <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="text" name="motivoSuspension" id="motivoSuspension" required="True" class="form-control" value="{{form.motivoSuspension.value}}" placeholder="Ingrese el motivo de suspensión">
+                        </div>
+                    </div>
+                    <br>
+                    <center>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary mr-2 w-25"><i class="fa fa-floppy-o"></i> Registrar</button>
+                            <a class="btn btn-danger w-25" href="/listarServicios/"><i class="fa fa-times-circle"></i> Cancelar</a>
+                        </div>
+                    </center>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts_local %}  
+ <script>  
+  $(function () {  
+   $("#id_mesDesde").datetimepicker({  
+       format: 'd/m/Y',  
+       timepicker:false  
+   });  
+   $("#id_mesHasta").datetimepicker({  
+       format: 'd/m/Y',  
+       timepicker:false  
+   });  
+  });  
+ </script> 
+ 
+ <script>  
+    $(document).ready(function () {  
+          jQuery.datetimepicker.setLocale('es');  
+    });  
+  </script> 
+ {% endblock scripts_local %}
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% if error %}
+    <script>
+        Swal.fire({
+        "icon": "error",
+        "text": "{{error}}"
+    })
+    </script>
+{% endif %}

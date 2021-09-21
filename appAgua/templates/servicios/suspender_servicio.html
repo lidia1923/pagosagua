@@ -1,0 +1,32 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %} Suspender Servicio {% endblock %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="text-white bg-facebook text-center p-2">
+            <h4><i class="fa fa-thumbs-o-down"></i> SUSPENDER SERVICIO</h4>
+        </div>
+        <div class="bg-light p-3">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mt-2 mb-3">
+                    <p class="text-dark">Campos Obligatorios <span class="text-danger">*</span></p>
+                    {% for field in form %}
+                        {{ field.label }} <span class="text-danger">*</span>:
+                        {{ field }}
+                        <div class="m-2"></div>
+                    {% endfor %}
+                </div>
+                <br>
+                <center><div class="form-group">
+                    <button type="submit" class="btn btn-primary mr-2 w-25"><i class="fa fa-thumbs-o-down"></i> Suspender</button>
+                    <a class="btn btn-danger w-25" href="/listarServicios/"><i class="fa fa-times-circle"></i> Cancelar</a>
+                </div></center>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 

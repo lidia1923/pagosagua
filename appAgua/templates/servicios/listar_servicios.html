@@ -1,0 +1,82 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %}
+Servicios de Agua
+{% endblock titulo %}
+
+{% block body %}
+
+<div style="margin-bottom: 10px;">
+    <a class="btn btn-primary" type="button" href="{% url 'vista_nuevoServicioAgua' %}">
+        <i class="fa fa-plus"></i> Nuevo Servicio Agua
+    </a>
+    <a class="btn btn-success" type="button" href="/historial/">
+        <i class="fa fa-file-text-o"></i> Historial
+    </a>
+</div>
+
+{% if servicios %}
+    <div class="card-header text-center bg-secondary text-white text-uppercase">
+        <i class="fa fa-file-text-o"></i> <strong>Listado Servicios de Agua</strong>
+    </div>
+    <br>
+    <div class="table-stats order-table ov-h bg-light">
+        <table class="table display" id="table_id">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Costo Activacion</th>
+                    <th>Motivo Suspensión</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in servicios %}
+                <tr class="bg-light">
+                    <td>{{s.usuario.nombres}} {{s.usuario.apellidos}}</td> 
+                    <td>{{s.costoActivacion}}</td>
+                    <td>{{s.motivoSuspension}}</td>
+                    <td>
+                        {% if s.estado %}
+                            <a class="btn btn-danger text-light" href="{% url 'suspenderServicio' s.idServicioAgua %}">
+                                <i class="fa fa-thumbs-o-down"></i> Suspender Servicio
+                            </a>
+                        {% else %}
+                            <a class="btn btn-primary" href="{% url 'vista_activarServicio' s.idServicioAgua %}">
+                                <i class="fa fa-check-square-o"></i> Activar Servicio
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <h4 class="p-2 text-sm-center">No existen Servicios de Agua registrados.</h4>
+{% endif %}
+
+{% endblock body %}
+
+{% block extrajs %}
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(document).ready( function () {
+        $('#table_id').DataTable({
+            "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+            "language": {
+                "url": "//cdn.databases.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                "lengthMenu": "Mostrar _MENU_ ",
+                "zeroRecords": "Registro no encontrado",
+                "info": "Mostrando _END_ de _TOTAL_ registros.",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtered from _MAX_ registros totales)",
+                "pagingType": "full_numbers",
+                "search": "Buscar: ",
+                "responsive": true,
+            }
+        });
+    } );
+</script>
+
+{% endblock extrajs %}

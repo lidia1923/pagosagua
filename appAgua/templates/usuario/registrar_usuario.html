@@ -1,0 +1,99 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %} Registrar Usuario {% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="text-center bg-facebook text-white p-2">
+            <h4><i class="fa fa-user-plus"></i> NUEVO USUARIO</h4>
+        </div>
+        <div class="bg-light p-2">
+            <form id="form" method="POST" novalidate>
+                {% csrf_token %}
+                {% if form.errors %}
+                <div class="alert alert-danger alert-dismissible m-2" role="alert" id="liveAlert">
+                    <strong>Faltan datos:  </strong> 
+                    {% for error in form.errors %}
+                        {{ error }} -
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <p class="text-dark p-2">Campos Obligatorios <span class="text-danger">*</span></p>
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Usuario <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="text" name="username" id="username" required="True" class="form-control" value="{{form.username.value}}" placeholder="Ingrese el usuario">
+                    </div>
+                </div>
+
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Contraseña <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="password" name="password1" id="password1" required="True" class="form-control" value="{{form.password1.value}}" placeholder="Ingrese la contraseña">
+                    </div>
+                </div>
+                
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Confirmar Contraseña <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="password" name="password2" id="password2" required="True" class="form-control" value="{{form.password2.value}}" placeholder="Ingrese nuevamente la contraseña">
+                    </div>
+                </div>
+                
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Nombres <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="text" name="nombres" id="nombres" required="True" class="form-control" value="{{form.nombres.value}}" placeholder="Ingrese los nombres">
+                    </div>
+                </div>
+                
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Apellidos <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="text" name="apellidos" id="apellidos" required="True" class="form-control" value="{{form.apellidos.value}}" placeholder="Ingrese los apellidos">
+                    </div>
+                </div>
+                
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Cedula <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="text" name="cedula" id="cedula" required="True" class="form-control" value="{{form.cedula.value}}" placeholder="Ingrese el número de cedula">
+                    </div>
+                </div>
+
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Celular <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="text" name="celular" id="celular" required="True" class="form-control" value="{{form.celular.value}}" placeholder="Ingrese el número de celular">
+                    </div>
+                </div>
+
+                <div class="fieldWrapper col-sm12 control-label m-2">
+                    <div>Correo <span class="text-danger">*</span>:</div>
+                    <div class="row-nombre">
+                        <input type="email" name="correo" id="correo" required="True" class="form-control" value="{{form.correo.value}}" placeholder="Ingrese el correo">
+                    </div>
+                </div>    
+
+                <br>
+                <center><div class="form-group">
+                    <button class="btn btn-info mr-2 w-25" type="submit"><i class="fa fa-floppy-o"></i> Guardar</button>
+                    <a class="btn btn-danger w-25" href="/listar_usuario/"><i class="fa fa-times-circle"></i> Cancelar</a>
+                </div></center>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% if error %}
+    <script>
+        Swal.fire({
+            "icon": "error",
+            "text": "{{error}}"
+        })
+    </script>
+{% endif %}
+
+{% endblock %}

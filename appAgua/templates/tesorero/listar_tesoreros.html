@@ -1,0 +1,77 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %}
+Tesoreros
+{% endblock titulo %}
+
+{% block body %}
+<div style="margin-bottom: 10px;">
+    <a class="btn btn-primary" type="button" href="{% url 'vista_crearTesorero' %}">
+        <i class="fa fa-user-plus"></i> Nuevo Tesorero
+    </a>
+</div>
+ 
+{% if tesoreros %}
+
+    <div class="card-header text-center bg-secondary text-white text-uppercase">
+        <i class="fa fa-file-text-o"></i> <strong>Listado de Tesoreros</strong>
+    </div>
+    <br>
+    <div class="table-stats order-table ov-h bg-light">
+        <table class="table display" id="table_id">
+            <thead>
+                <tr>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Cedula</th>
+                    <th>Celular</th>
+                    <th>Correo</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in tesoreros %}
+                <tr class="bg-light">
+                    <td>{{t.nombres}}</td>
+                    <td>{{t.apellidos}}</td>
+                    <td>{{t.cedula}}</td>
+                    <td>{{t.celular}}</td>
+                    <td>{{t.correo}}</td>
+                    <td>
+                        <a class="btn btn-primary text-white" href="{% url 'vista_editarTesorero' t.idTesorero %}">
+                            <i class="fa fa-edit"></i> Editar Tesorero
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <h4 class="p-2 text-sm-center">No existen Tesoreros registrados</h4>
+
+{% endif %}
+
+{% endblock body %}
+
+{% block extrajs %}
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(document).ready( function () {
+        $('#table_id').DataTable({
+            "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+            "language": {
+                "url": "//cdn.databases.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                "lengthMenu": "Mostrar _MENU_ ",
+                "zeroRecords": "Registro no encontrado",
+                "info": "Mostrando _END_ de _TOTAL_ registros.",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtered from _MAX_ registros totales)",
+                "pagingType": "full_numbers",
+                "search": "Buscar: ",
+                "responsive": true,
+            }
+        });
+    } );
+</script>
+{% endblock extrajs %}

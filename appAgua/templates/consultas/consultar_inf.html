@@ -1,0 +1,65 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %}
+Consultar Pagos de Agua
+{% endblock titulo %}
+
+{% block body %}
+
+{% if pagos %}
+    <div class="card-header text-center bg-secondary text-white text-uppercase">
+        <i class="fa fa-file-text-o"></i> <strong>Listado de Pagos de Agua</strong>
+    </div>
+    <br>
+    <div class="table-stats order-table ov-h bg-light">
+        <table class="table display" id="table_id">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Tesorero</th>
+                    <th>Mes desde</th>
+                    <th>Mes hasta</th>
+                    <th>Costo Servicio</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pagos %}
+                <tr class="bg-light">
+                    <td>{{p.usuario}}</td>
+                    <td>{{p.tesorero}}</td>
+                    <td>{{p.mesDesde}}</td>
+                    <td>{{p.mesHasta}}</td>
+                    <td>{{p.costoServicio}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <h4 class="p-2 text-sm-center">No existen Pagos de Agua.</h4>
+{% endif %}
+
+{% endblock body %}
+
+{% block extrajs %}
+
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(document).ready( function () {
+        $('#table_id').DataTable({
+            "aLengthMenu": [[5, 10, 15, -1], [5, 10, 15, "All"]],
+            "language": {
+                "url": "//cdn.databases.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                "lengthMenu": "Mostrar _MENU_ ",
+                "zeroRecords": "Registro no encontrado",
+                "info": "Mostrando _END_ de _TOTAL_ registros.",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtered from _MAX_ registros totales)",
+                "pagingType": "full_numbers",
+                "search": "Buscar: ",
+                "responsive": true,
+            }
+        });
+    } );
+</script>
+
+{% endblock extrajs %}

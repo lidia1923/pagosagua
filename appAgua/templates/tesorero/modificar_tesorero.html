@@ -1,0 +1,73 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %} Editar Tesorero {% endblock %}
+ 
+{% block body %}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="text-center bg-facebook text-white p-2">
+            <h4><i class="fa fa-edit"></i> EDITAR TESORERO</h4>
+        </div>
+        <div class="bg-light p-3">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <p class="text-dark">Campos Obligatorios <span class="text-danger">*</span></p>
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Nombres <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="text" name="nombres" id="nombres" required="True" class="form-control" value="{{form.nombres.value}}" placeholder="Ingrese los nombres">
+                        </div>
+                    </div>
+                    
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Apellidos <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="text" name="apellidos" id="apellidos" required="True" class="form-control" value="{{form.apellidos.value}}" placeholder="Ingrese los apellidos">
+                        </div>
+                    </div>
+                    
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Cedula <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input readonly="readonly" type="text" name="cedula" id="cedula" required="True" class="form-control" value="{{form.cedula.value}}" placeholder="Ingrese el número de cédula">
+                        </div>
+                    </div>
+        
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Celular <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="text" name="celular" id="celular" required="True" class="form-control" value="{{form.celular.value}}" placeholder="Ingrese el número de celular">
+                        </div>
+                    </div>
+        
+                    <div class="fieldWrapper col-sm12 control-label mb-2">
+                        <div>Correo <span class="text-danger">*</span>:</div>
+                        <div class="row-nombre">
+                            <input type="email" name="correo" id="correo" required="True" class="form-control" value="{{form.correo.value}}" placeholder="Ingrese el correo">
+                        </div>
+                    </div>
+                    <br>
+                    <center>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary mr-2 w-25"><i class="fa fa-floppy-o"></i> Actualizar</button>
+                            <a class="btn btn-danger w-25" href="/listarTesoreros/"><i class="fa fa-times-circle"></i> Cancelar</a>
+                        </div>
+                    </center>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+{% if error %}
+    <script>
+        Swal.fire({
+            "icon": "error",
+            "text": "{{error}}"
+        })
+    </script>
+{% endif %}
+{% endblock %}

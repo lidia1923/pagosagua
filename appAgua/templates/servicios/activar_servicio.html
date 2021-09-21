@@ -1,0 +1,17 @@
+{% extends '../vista_principal.html' %}
+{% block titulo %}
+Activar Servicio
+{% endblock titulo %}
+
+{% block body %}
+<form method="POST">
+    {% csrf_token %}
+    <div>
+        <p><strong>Desea activar el servicio para:</strong></p>
+        <h3 class="m-3">{{ object.usuario.nombres }} {{object.usuario.apellidos }}</h3>
+        <button class="btn btn-primary" type="submit"><i class="fa fa-check-square-o"></i> Activar Servicio</button>
+        <a class="btn btn-danger" href="{% url 'vista_listarServicios' %}"><i class="fa fa-times-circle"></i> Cancelar</a>
+    </div>
+</form>
+
+{% endblock body %}
